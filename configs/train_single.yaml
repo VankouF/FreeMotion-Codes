@@ -1,0 +1,21 @@
+GENERAL:
+  EXP_NAME: train_single
+  CHECKPOINT: ./checkpoints/generation
+  LOG_DIR: ./log
+
+TRAIN:
+  LR: 1e-5
+  WEIGHT_DECAY: 0.00002
+  BATCH_SIZE: 8
+  EPOCH: 1000
+  STEP: 1000000
+  LOG_STEPS: 10
+  SAVE_STEPS: 20000
+  SAVE_EPOCH: 50
+  SAVE_TOPK: -1
+  RESUME:
+  NUM_WORKERS: 32
+  MODE: finetune
+  LAST_EPOCH: 0
+  LAST_ITER: 0
+  FROM_PRETRAIN: 

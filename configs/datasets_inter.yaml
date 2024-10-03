@@ -1,0 +1,23 @@
+interhuman:
+    NAME: interhuman
+    DATA_ROOT: ./data 
+    MOTION_REP: global
+    MODE: train
+    CACHE: True
+    SINGLE_TEXT_DESCRIPTION: True
+
+interhuman_val:
+    NAME: interhuman  
+    DATA_ROOT: ./data 
+    MOTION_REP: global
+    MODE: val
+    CACHE: True
+    SINGLE_TEXT_DESCRIPTION: True
+
+interhuman_test:
+    NAME: interhuman  
+    DATA_ROOT: ./data 
+    MOTION_REP: global
+    MODE: test
+    CACHE: True
+    SINGLE_TEXT_DESCRIPTION: True

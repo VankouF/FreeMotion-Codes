@@ -1,13 +1,13 @@
 GENERAL:
   EXP_NAME: train_single
-  CHECKPOINT: ./checkpoints/generation
+  CHECKPOINT: ./checkpoints
   LOG_DIR: ./log
 
 TRAIN:
-  LR: 1e-5
+  LR: 1e-4
   WEIGHT_DECAY: 0.00002
-  BATCH_SIZE: 8
-  EPOCH: 1000
+  BATCH_SIZE: 80
+  EPOCH: 2500
   STEP: 1000000
   LOG_STEPS: 10
   SAVE_STEPS: 20000

@@ -37,7 +37,8 @@ Text-to-motion synthesis is a crucial task in computer vision. Existing methods 
 
 - [✓] Release the FreeMotion training.
 - [✓] Release the FreeMotion evaluation.
-- [] Release the separate_annots dataset.
+- [✓] Release the separate_annots dataset.
+- [] Release the inference code.
 - [] Release the FreeMotion checkpoints.
 
 ## Quick Start

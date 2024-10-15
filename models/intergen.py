@@ -13,7 +13,7 @@ class InterGenSpatialControlNet(nn.Module):
         self.cfg = cfg
         self.latent_dim = cfg.LATENT_DIM
         self.decoder = InterDiffusionSpatialControlNet(cfg, sampling_strategy=cfg.STRATEGY)
-        
+        self.archi = cfg.ARCHI
         clip_model, _ = clip.load("ViT-L/14@336px", device="cpu", jit=False)
         self.token_embedding = clip_model.token_embedding
         self.clip_transformer = clip_model.transformer
@@ -112,38 +112,16 @@ class InterGenSpatialControlNet(nn.Module):
 
     def load_state_dict(self, state_dict: Union[List[Mapping[str, Any]],Mapping[str, Any]], strict: bool = True):
         
-        # for test
-        if isinstance(state_dict, list):
-            state_dict_motion_condition = state_dict[0]
-            state_dict_spatial_condition = state_dict[1]
-            
-            state_dict = state_dict_motion_condition
-            
-            for k, v  in state_dict_spatial_condition.items():
-                if "decoder.net.control_branch" in k:
-                    k_new = k.replace('decoder.net.control_branch', 'decoder.net.spatial_control_branch')
-                    state_dict[k_new] = v
-                elif "decoder.net.input_hint_block" in k:
-                    state_dict[k] = v
-                elif "decoder.net.zero_linear" in k:
-                    k_new = k.replace('decoder.net.zero_linear', 'decoder.net.spatial_zero_linear')
-                    state_dict[k_new] = v
-                    
-            return super().load_state_dict(state_dict, strict)
-        
-        
-        for k in state_dict.keys(): 
-            if "decoder.net.net" in k:
-                return super().load_state_dict(state_dict, strict=False)
+        if self.archi == 'single':
+            return super().load_state_dict(state_dict, strict=strict)
         
         new_state_dict = OrderedDict()
         for name, value in state_dict.items():
-            if 'decoder.net' in name:
-                name_new = name.replace('decoder.net', 'decoder.net.control_branch')
+            if 'decoder.net.net' in name:
+                name_new = name.replace('decoder.net.net', 'decoder.net.control_branch')
                 new_state_dict[name_new] = value
-                name_new = name.replace('decoder.net', 'decoder.net.net')
-                new_state_dict[name_new] = value
+                new_state_dict[name] = value
             else:
                 new_state_dict[name] = value
-        return super().load_state_dict(new_state_dict, strict=False)
+        return super().load_state_dict(new_state_dict, strict=strict)
     
